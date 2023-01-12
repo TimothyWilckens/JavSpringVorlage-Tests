@@ -24,6 +24,12 @@
               <a class="nav-link" th:href="@{/personen}">Personen</a>
           </li>
 
+          <li th:if="${activePage == 'impressum'}" class="nav-item">
+            <a class="nav-link active" th:href="@{/impressum}">Impressum</a>
+          </li>
+          <li th:unless="${activePage == 'impressum'}" class="nav-item">
+              <a class="nav-link" th:href="@{/?activePage=impressum}">Impressum</a>
+          </li>
 
         </ul>
       </div>
