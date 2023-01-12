@@ -1,0 +1,31 @@
+<!-- 
+  Die Navbar - hier befindet sich die Navigationsbar. Die gesamte Datei wird dynamisch per Link in die index.html eingebunden. Der Vorteil: Wenn du hier etwas änderst, wird das auf allen anderen Seiten ebenfalls übernommen. 
+-->
+<nav class="navbar navbar-dark navbar-expand-lg bg-dark container">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">JS Vorlage</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          
+          <li th:if="${activePage == 'home'}" class="nav-item">
+            <a class="nav-link active" th:href="@{/?activePage=home}">Home</a>
+          </li>
+          <li th:unless="${activePage == 'home'}" class="nav-item">
+              <a class="nav-link" th:href="@{/?activePage=home}">Home</a>
+          </li>
+
+          <li th:if="${activePage == 'personen'}" class="nav-item">
+            <a class="nav-link active" th:href="@{/personen}">Personen</a>
+          </li>
+          <li th:unless="${activePage == 'personen'}" class="nav-item">
+              <a class="nav-link" th:href="@{/personen}">Personen</a>
+          </li>
+
+
+        </ul>
+      </div>
+    </div>
+  </nav>

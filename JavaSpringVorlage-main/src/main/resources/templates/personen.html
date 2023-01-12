@@ -1,0 +1,26 @@
+<h2>Aktuelle Personen</h2>
+<hr>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <td>#</td>
+            <td>Vorname</td>
+            <td>Nachname</td>
+            <td>Alter</td>
+            <td>&nbsp;</td>
+        </tr>
+    </thead>
+    <tr th:each="person, counter: ${personen}">
+        <td th:text="${counter.count}"></td>
+        <td th:text="${person.getVorname()}"></td>
+        <td th:text="${person.getNachname()}"></td>
+        <td th:text="${person.getAlter()}"></td>
+        <td>
+            <a class="btn btn-danger btn-sm" role="button" th:href="@{/delpersonenprep(id=${counter.index})}"><i class="bi bi-trash"></i></a>
+            &nbsp;
+            <a class="btn btn-primary btn-sm" role="button" th:href="@{/updatepersonprep(id=${counter.index})}"><i class="bi bi-pen"></i></a>
+        </td>
+    </tr>
+</table>
+<hr>
+<a class="btn btn-success btn-sm" role="button" th:href="@{/addpersonprep}">+ Person</a>

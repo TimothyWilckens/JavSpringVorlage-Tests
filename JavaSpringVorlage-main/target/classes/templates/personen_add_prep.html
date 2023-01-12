@@ -1,0 +1,25 @@
+<h3>Neue Person hinzufügen</h3>
+<hr>
+<form th:action="@{/addperson}" class="col-4">
+    <div class="mb-3">
+        <label for="personVorname" class="form-label">Vorname</label>
+        <!-- th:name definiert den Namen des Feldes, welches der Controller in der Methodensignatur entgegennimmt. -->
+        <input type="text" class="form-control" id="personVorname" placeholder="Vorname" th:name="personVorname">
+    </div>
+
+    <div class="mb-3">
+        <label for="personNachname" class="form-label">Nachname</label>
+        <input type="text" class="form-control" id="personNachname" placeholder="Nachname" th:name="personNachname">
+    </div>
+
+    <div class="mb-3">
+        <label for="personAlter" class="form-label">Alter</label>
+        <input type="number" class="form-control" id="personAlter" placeholder="Alter" th:name="personAlter">
+    </div>
+
+    <div class="col-auto">
+        <button type="submit" class="btn btn-success mb-3">Person anlegen</button>
+    </div>
+</form>
+
+

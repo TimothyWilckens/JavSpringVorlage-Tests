@@ -1,0 +1,26 @@
+<h3>Person ändern</h3>
+<hr>
+<form th:action="@{/updateperson}" class="col-4">
+    <div class="mb-3">
+        <label for="personVorname" class="form-label">Vorname</label>
+        <!-- th:name definiert den Namen des Feldes, welches der Controller in der Methodensignatur entgegennimmt. -->
+        <input type="text" class="form-control" id="personVorname" th:value="${person.getVorname()}" th:name="personVorname">
+    </div>
+
+    <div class="mb-3">
+        <label for="personNachname" class="form-label">Nachname</label>
+        <input type="text" class="form-control" id="personNachname" th:value="${person.getNachname()}" th:name="personNachname">
+    </div>
+
+    <div class="mb-3">
+        <label for="personAlter" class="form-label">Alter</label>
+        <input type="number" class="form-control" id="personAlter" th:value="${person.getAlter()}" th:name="personAlter">
+    </div>
+
+    <!-- Die zu ändernde ID wird hier mit in das Formular gegeben, um auch das richtige Element zu ändern. -->
+    <input type="number" class="form-control" th:value="${id}" th:name="id" style="display: none;" >
+    <div>
+        <a class="btn btn-primary" role="button" th:href="@{/personen}">Zurück</a>
+        <button type="submit" class="btn btn-success">Speichern</button>
+    </div>
+</form>
