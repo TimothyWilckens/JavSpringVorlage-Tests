@@ -31,6 +31,13 @@
               <a class="nav-link" th:href="@{/?activePage=impressum}">Impressum</a>
           </li>
 
+          <li th:if="${activePage == 'filme'}" class="nav-item">
+            <a class="nav-link active" th:href="@{/filme}">Filme</a>
+          </li>
+          <li th:unless="${activePage == 'filme'}" class="nav-item">
+              <a class="nav-link" th:href="@{/filme}">Filme</a>
+          </li>
+
         </ul>
       </div>
     </div>
