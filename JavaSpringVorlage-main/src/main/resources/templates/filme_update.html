@@ -1,0 +1,42 @@
+<h3>Film ändern</h3>
+<hr>
+<form th:action="@{/updatefilm}" class="col-4">
+    <div class="mb-3">
+        <label for="filmTitel" class="form-label">Titel</label>
+        <input type="text" class="form-control" id="filmTitel" th:value="${film.getTitel()}" th:name="filmTitel">
+    </div>
+
+    <div class="mb-3">
+        <label for="filmFSK" class="form-label">Altersfreigabe</label>
+        <!-- <input type="text" class="form-control" id="filmFSK" th:value="${film.getFSK()}" th:name="filmFSK"> -->
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <label class="btn btn-light">
+              <input type="radio" th:name="filmFSK" id="filmFSK" autocomplete="off" value="0"> 0
+            </label>
+            <label class="btn btn-light">
+              <input type="radio" th:name="filmFSK" id="filmFSK" autocomplete="off" value="6"> 6
+            </label>
+            <label class="btn btn-light">
+              <input type="radio" th:name="filmFSK" id="filmFSK" autocomplete="off" value="12"> 12
+            </label>
+            <label class="btn btn-light">
+              <input type="radio" th:name="filmFSK" id="filmFSK" autocomplete="off" value="16"> 16
+            </label>
+            <label class="btn btn-light">
+              <input type="radio" th:name="filmFSK" id="filmFSK" autocomplete="off" value="18"> 18
+            </label>
+          </div>
+    </div>
+
+    <div class="mb-3">
+        <label for="filmLaenge" class="form-label">Alter</label>
+        <input type="number" class="form-control" id="filmLaenge" th:value="${film.getLaenge()}" th:name="filmLaenge">
+    </div>
+
+    <input type="number" class="form-control" th:value="${id}" th:name="id" style="display: none;" >
+    <div>
+        <button type="submit" class="btn btn-success">Änderungen speichern</button>
+        <a class="btn btn-primary" role="button" th:href="@{/filme}">Zurück</a>
+    </div>
+</form>
+

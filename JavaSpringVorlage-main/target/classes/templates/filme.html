@@ -15,6 +15,11 @@
         <td th:text="${film.getTitel()}"></td>
         <td th:text="${film.getFSK()}"></td>
         <td th:text="${film.getLaenge()}"></td>
+        <td>
+            <a class="btn btn-danger btn-sm" role="button" th:href="@{/delfilmeprep(id=${counter.index})}"><i class="bi bi-trash"></i></a>
+            &nbsp;
+            <a class="btn btn-primary btn-sm" role="button" th:href="@{/updatefilmprep(id=${counter.index})}"><i class="bi bi-pen"></i></a>
+        </td>
     </tr>
 </table>
-        
+<a class="btn btn-success btn-sm" role="button" th:href="@{/addfilmprep}">+ Film</a>        

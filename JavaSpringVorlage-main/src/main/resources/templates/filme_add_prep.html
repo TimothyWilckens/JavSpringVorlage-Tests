@@ -1,0 +1,48 @@
+<h3>Neuer Film</h3>
+<hr>
+<form th:action="@{/addfilm}" class="col-4">
+    <div class="mb-3">
+        <label for="filmTitel" class="form-label">Titel des Films</label>
+         <!-- th:name definiert den Namen des Feldes, welches der Controller in der Methodensignatur entgegennimmt. -->
+        <input type="text" class="form-control" id="filmTitel" placeholder="Titel" th:name="filmTitel">
+    </div>
+
+    <div class="mb-3">
+        <label for="filmFSK" class="form-label">Altersfreigabe</label>
+        <!-- <input type="number" class="form-control" id="filmFSK" min="0" max="18" placeholder="0, 6, 12, 16 oder 18" th:name="filmFSK"> -->
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <label class="btn btn-light">
+              <input type="radio" th:name="filmFSK" id="filmFSK" autocomplete="off" value="0"> 0
+            </label>
+            <label class="btn btn-light">
+              <input type="radio" th:name="filmFSK" id="filmFSK" autocomplete="off" value="6"> 6
+            </label>
+            <label class="btn btn-light">
+              <input type="radio" th:name="filmFSK" id="filmFSK" autocomplete="off" value="12"> 12
+            </label>
+            <label class="btn btn-light">
+              <input type="radio" th:name="filmFSK" id="filmFSK" autocomplete="off" value="16"> 16
+            </label>
+            <label class="btn btn-light">
+              <input type="radio" th:name="filmFSK" id="filmFSK" autocomplete="off" value="18"> 18
+            </label>
+          </div>
+    </div>
+
+    <div class="mb-3">
+        <label for="filmLaenge" class="form-label">Dauer der Films</label>
+        <input type="number" class="form-control" id="filmLaenge" placeholder="Gesamtdauer" th:name="filmLaenge">
+    </div>
+
+    <div class="col-auto">
+        <button type="submit" class="btn btn-success mb-3">Neuen Film eintragen</button>
+    </div>
+</form>
+<a class="btn btn-success btn-sm" role="button" th:href="@{/filme}">Abbrechen</a>
+<!-- <button type="submit" class="btn btn-secondary mb-5" th:href="@{/filme}">Abbrechen</button>
+<div class="col-auto">
+    <button type="submit" class="btn btn-secondary mb-5">Abbrechen</button>
+</div>
+<a class="btn btn-success btn-sm" role="button" th:href="@{/addfilmprep}">+ Film</a>
+
+-->
