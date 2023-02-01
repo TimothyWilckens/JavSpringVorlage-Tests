@@ -1,47 +1,24 @@
 package gymhum.de.model;
 
 public class Feld {
-    int reihe;
-    int höhe;
-    boolean istBesetzt;
-    boolean istKreuz;
-    boolean istKreis;
+    boolean istFrei;
+    boolean zustand;
+    // Zustand true=O und false=X
 
-    public Feld(int reihe, int höhe, boolean istBesetzt, boolean istKreuz, boolean istKreis){
-        setHöhe(höhe);
-        setIstKreuz(istKreuz);
-        setReihe(reihe);
-        setIstKreis(istKreis);
-        setIstBesetzt(istBesetzt);
+    public Feld(){
+        setIstFrei(true);
+        setZustand(true);
     }
-    public void setIstBesetzt(boolean istBesetzt) {
-        this.istBesetzt = istBesetzt;
+    public void setIstFrei(boolean istFrei) {
+        this.istFrei = istFrei;
     }
-    public void setIstKreuz(boolean istKreuz) {
-        this.istKreuz = istKreuz;
+    public void setZustand(boolean zustand) {
+        this.zustand = zustand;
     }
-    public void setIstKreis(boolean istKreis) {
-        this.istKreis = istKreis;
+    public boolean getIstFrei() {
+        return istFrei;
     }
-    public void setHöhe(int höhe) {
-        this.höhe = höhe;
-    }
-    public void setReihe(int reihe) {
-        this.reihe = reihe;
-    }
-    public int getHöhe() {
-        return höhe;
-    }
-    public int getReihe() {
-        return reihe;
-    }
-    public boolean getIstBesetzt() {
-        return istBesetzt;
-    }
-    public boolean getIstKreuz() {
-        return istKreuz;
-    }
-    public boolean getIstKreis() {
-        return istKreis;
+    public boolean getZustand() {
+        return zustand;
     }
 }
