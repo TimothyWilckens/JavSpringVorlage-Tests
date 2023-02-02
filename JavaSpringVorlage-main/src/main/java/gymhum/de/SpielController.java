@@ -22,6 +22,7 @@ public class SpielController {
     @GetMapping("/spiel")
     public String showSpiel(@RequestParam(name="activePage", required = false, defaultValue = "spiel") String activePage, Model model){
         model.addAttribute("activePage", "spiel");
+        model.addAttribute("spiel", getFelder());
         return "index.html";
     }
 
