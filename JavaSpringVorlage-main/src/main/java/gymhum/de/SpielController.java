@@ -23,17 +23,24 @@ public class SpielController {
     @GetMapping("/spiel")
     public String showSpiel(@RequestParam(name="activePage", required = false, defaultValue = "spiel") String activePage, Model model){
         model.addAttribute("activePage", "spiel");
-        model.addAttribute("spiel", getFelder());
+        model.addAttribute("felder", getFelder());
         return "index.html";
     }
 
-    @RequestMapping("/neuesSpiel")
-    public String neuesSpiel(@RequestParam(name="feldBesetzt", required = true, defaultValue = "null") boolean feldBesetzt, @RequestParam(name="feldZustand", required = true, defaultValue = "null") boolean feldZustand, @RequestParam(name="hoehe", required = true) int hoehe, @RequestParam(name="breite", required = true) int breite, @RequestParam(name="activePage", required = false, defaultValue = "neuesSpiel") String activePage, Model model){
-        Feld felder = getFelder()[hoehe][breite];
-        felder.setIstFrei(feldBesetzt);
-        felder.setZustand(feldZustand);
-        return "redirect:/spiel";
+    @GetMapping("/addsteinprep")
+    public String addStein(@RequestParam(name="activePage", required = true, defaultValue = "/addstein") String activePage, @RequestParam(name="id", required = true) int id, Model model){
+        model.addAttribute("activePage", "spiel");
+        model.addAttribute("felder", getFelder()[][id]);
+        return "index.html";
     }
+
+    // Die Person wird gelöscht und anschließend geht es zur Tabellenansicht zurück.
+    @GetMapping("/addstein")
+    public String delPersonenFinal(@RequestParam(name="activePage", required = true, defaultValue = "spiel") String activePage, @RequestParam(name="id", required = true) int id, Model model){
+        removePerson(getPerson(id));
+        return "redirect:/personen";
+    }
+
 
     private void initFeld(){
         for(int i = 0; i < 6; i++){
@@ -63,13 +70,13 @@ public class SpielController {
         felder[0][3].setIstFrei(false);
         felder[0][3].setZustand(false);
         
-        for(int i = 0; i < 6; i++){
-            for(int k = 0; k < 4; k++){
-                if(getFelder()[i][k].getIstFrei() == false && getFelder()[i][k+1].getIstFrei() == false && getFelder()[i][k +2 ].getIstFrei() == false && getFelder()[i][k + 3].getIstFrei() == false){
-                    if(getFelder()[i][k].getZustand() && getFelder()[i][k+1].getZustand() && getFelder()[i][k +2 ].getZustand() && getFelder()[i][k + 3].getZustand()){
-                        System.out.println("Spieler O hat gewonnen");
+        for(int hoehe = 0; hoehe < 6; hoehe++){
+            for(int breite = 0; breite < 4; breite++){
+                if(getFelder()[hoehe][breite].getIstFrei() == false && getFelder()[hoehe][breite+1].getIstFrei() == false && getFelder()[hoehe][breite +2 ].getIstFrei() == false && getFelder()[hoehe][breite + 3].getIstFrei() == false){
+                    if(getFelder()[hoehe][breite].getZustand() && getFelder()[hoehe][breite+1].getZustand() && getFelder()[hoehe][breite+2].getZustand() && getFelder()[hoehe][breite+3].getZustand()){
+                        System.out.println("Spieler O hat gewonnen horizontal");
                     }
-                    else if(getFelder()[i][k].getZustand() == false && getFelder()[i][k+1].getZustand() == false && getFelder()[i][k +2 ].getZustand() == false && getFelder()[i][k + 3].getZustand() == false){
+                    else if(getFelder()[hoehe][breite].getZustand() == false && getFelder()[hoehe][breite+1].getZustand() == false && getFelder()[hoehe][breite+2].getZustand() == false && getFelder()[hoehe][breite+3].getZustand() == false){
                         System.out.println("Spieler X hat gewonnen horizontal");
                     }
                 }
@@ -90,7 +97,7 @@ public class SpielController {
             for(int breite = 0; breite < 7; breite++){
                 if(getFelder()[hoehe][breite].getIstFrei() == false && getFelder()[hoehe+1][breite].getIstFrei() == false && getFelder()[hoehe+2][breite].getIstFrei() == false && getFelder()[hoehe+3][breite].getIstFrei() == false){
                     if(getFelder()[hoehe][breite].getZustand() && getFelder()[hoehe+1][breite].getZustand() && getFelder()[hoehe+2][breite].getZustand() && getFelder()[hoehe+3][breite].getZustand()){
-                        System.out.println("Spieler O hat gewonnen");
+                        System.out.println("Spieler O hat gewonnen vertikal");
                     }
                     else if(getFelder()[hoehe][breite].getZustand() == false && getFelder()[hoehe+1][breite].getZustand() == false && getFelder()[hoehe+2][breite].getZustand() == false && getFelder()[hoehe+3][breite].getZustand() == false){
                         System.out.println("Spieler X hat gewonnen vertikal");
@@ -99,7 +106,7 @@ public class SpielController {
             }
         }
 
-        // Test Schräg Oben
+        // Test Schräg Unten
         felder[2][2].setIstFrei(false);
         felder[2][2].setZustand(false);
         felder[3][3].setIstFrei(false);
@@ -113,7 +120,7 @@ public class SpielController {
             for(int breite = 0; breite < 4; breite++){
                 if(getFelder()[hoehe][breite].getIstFrei() == false && getFelder()[hoehe+1][breite+1].getIstFrei() == false && getFelder()[hoehe+2][breite+2].getIstFrei() == false && getFelder()[hoehe+3][breite+3].getIstFrei() == false){
                     if(getFelder()[hoehe][breite].getZustand() && getFelder()[hoehe+1][breite+1].getZustand() && getFelder()[hoehe+2][breite+2].getZustand() && getFelder()[hoehe+3][breite+3].getZustand()){
-                        System.out.println("Spieler O hat gewonnen");
+                        System.out.println("Spieler O hat gewonnen schräg oben");
                     }
                     else if(getFelder()[hoehe][breite].getZustand() == false && getFelder()[hoehe+1][breite+1].getZustand() == false && getFelder()[hoehe+2][breite+2].getZustand() == false && getFelder()[hoehe+3][breite+3].getZustand() == false){
                         System.out.println("Spieler X hat gewonnen schräg oben");
@@ -122,21 +129,21 @@ public class SpielController {
             }
         }
 
-        // Test Schräg Unten
-        felder[4][1].setIstFrei(false);
-        felder[4][1].setZustand(false);
-        felder[3][2].setIstFrei(false);
-        felder[3][2].setZustand(false);
-        felder[2][3].setIstFrei(false);
-        felder[2][3].setZustand(false);
+        // Test Schräg Oben
         felder[1][4].setIstFrei(false);
         felder[1][4].setZustand(false);
+        felder[2][3].setIstFrei(false);
+        felder[2][3].setZustand(false);
+        felder[3][2].setIstFrei(false);
+        felder[3][2].setZustand(false);
+        felder[4][1].setIstFrei(false);
+        felder[4][1].setZustand(false);
 
         for(int hoehe = 3; hoehe < 6; hoehe++){
             for(int breite = 0; breite < 4; breite++){
                 if(getFelder()[hoehe][breite].getIstFrei() == false && getFelder()[hoehe-1][breite+1].getIstFrei() == false && getFelder()[hoehe-2][breite+2].getIstFrei() == false && getFelder()[hoehe-3][breite+3].getIstFrei() == false){
                     if(getFelder()[hoehe][breite].getZustand() && getFelder()[hoehe-1][breite+1].getZustand() && getFelder()[hoehe-2][breite+2].getZustand() && getFelder()[hoehe-3][breite+3].getZustand()){
-                        System.out.println("Spieler O hat gewonnen");
+                        System.out.println("Spieler O hat gewonnen schräg unten");
                     }
                     else if(getFelder()[hoehe][breite].getZustand() == false && getFelder()[hoehe-1][breite+1].getZustand() == false && getFelder()[hoehe-2][breite+2].getZustand() == false && getFelder()[hoehe-3][breite+3].getZustand() == false){
                         System.out.println("Spieler X hat gewonnen schräg unten");
