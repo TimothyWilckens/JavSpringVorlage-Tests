@@ -2,6 +2,7 @@
 <hr>
 <table class="table table-bordered">
     <thead>
+        <!--
         <tr>
             <td>Breite 0</td>
             <td>Breite 1</td>
@@ -11,6 +12,30 @@
             <td>Breite 5</td>
             <td>Breite 6</td>
         </tr>
+        -->
+        <tr> 
+            <th scope="col">
+                <a class="btn btn-outline-primary" role="button" th:href="@{/addstein(id=${0})}">Einsetzen</a>
+            </th>
+            <th scope="col">
+                <a class="btn btn-outline-primary" role="button" th:href="@{/addstein(id=${1})}">Einsetzen</a>
+            </th>
+            <th scope="col">
+                <a class="btn btn-outline-primary" role="button" th:href="@{/addstein(id=${2})}">Einsetzen</a>
+            </th>
+            <th scope="col">
+                <a class="btn btn-outline-primary" role="button" th:href="@{/addstein(id=${3})}">Einsetzen</a>
+            </th>
+            <th scope="col">
+                <a class="btn btn-outline-primary" role="button" th:href="@{/addstein(id=${4})}">Einsetzen</a>
+            </th>
+            <th scope="col">
+                <a class="btn btn-outline-primary" role="button" th:href="@{/addstein(id=${5})}">Einsetzen</a>
+            </th>
+            <th scope="col">
+                <a class="btn btn-outline-primary" role="button" th:href="@{/addstein(id=${6})}">Einsetzen</a>
+            </th>
+          </tr>
     </thead>
 
     <tr th:each="feld, counter: ${felder}">
@@ -21,27 +46,6 @@
                 <span th:if="${f.getZustand()}==true">O</span>
                 <span th:unless="${f.getZustand()}==true">X</span>
             </span>
-        </td>
-        <td>
-            <a class="btn btn-danger btn-sm" role="button" th:href="@{/delpersonenprep(id=${counter.index})}"></a>
-        </td>
-        <td>
-            <a class="btn btn-success btn-sm" role="button" th:href="@{/addpersonprep}">+ Person</a>
-        </td>
-        <td>
-            <a class="btn btn-success btn-sm" role="button" th:href="@{/addpersonprep}">+ Person</a>
-        </td>
-        <td>
-            <a class="btn btn-success btn-sm" role="button" th:href="@{/addpersonprep}">+ Person</a>
-        </td>
-        <td>
-            <a class="btn btn-success btn-sm" role="button" th:href="@{/addpersonprep}">+ Person</a>
-        </td>
-        <td>
-            <a class="btn btn-success btn-sm" role="button" th:href="@{/addpersonprep}">+ Person</a>
-        </td>
-        <td>
-            <a class="btn btn-success btn-sm" role="button" th:href="@{/addpersonprep}">+ Person</a>
         </td>
     </tr>
 </table>

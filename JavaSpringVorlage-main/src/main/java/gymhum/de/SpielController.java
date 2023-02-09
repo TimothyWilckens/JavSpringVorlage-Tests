@@ -3,21 +3,23 @@ package gymhum.de;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import gymhum.de.model.Feld;
+import gymhum.de.model.Spieler;
 
 @Controller
 public class SpielController {
 
     Feld[][] felder;
+    Spieler p1;
     
     public SpielController(){
         setFelder(new Feld[6][7]);
+        setP1(new Spieler(false));
         initFeld();
-        TestLauf();
-        showTestFeld();
+        // Pruefung();
+        // showTestFeld();
     }
 
     @GetMapping("/spiel")
@@ -27,18 +29,29 @@ public class SpielController {
         return "index.html";
     }
 
-    @GetMapping("/addsteinprep")
-    public String addStein(@RequestParam(name="activePage", required = true, defaultValue = "/addstein") String activePage, @RequestParam(name="id", required = true) int id, Model model){
-        model.addAttribute("activePage", "spiel");
-        model.addAttribute("felder", getFelder()[][id]);
-        return "index.html";
-    }
-
-    // Die Person wird gelöscht und anschließend geht es zur Tabellenansicht zurück.
+    
     @GetMapping("/addstein")
-    public String delPersonenFinal(@RequestParam(name="activePage", required = true, defaultValue = "spiel") String activePage, @RequestParam(name="id", required = true) int id, Model model){
-        removePerson(getPerson(id));
-        return "redirect:/personen";
+    public String addStein(@RequestParam(name="activePage", required = true, defaultValue = "spiel") String activePage, @RequestParam(name="id", required = true) int id, Model model){
+        for(int hoehe = 5; hoehe >= 0; hoehe--) {
+            if(getFelder()[hoehe][id].getIstFrei()) {
+                if(p1.getActiveplayer() == true) {
+                    getFelder()[hoehe][id].setIstFrei(false);
+                    getFelder()[hoehe][id].setZustand(true);
+                    p1.setActiveplayer(false);
+                    System.out.println("Feld " + hoehe + " " + id +" wurde geändert in O");  
+                    break;    
+                } 
+                else if(p1.getActiveplayer()== false) {
+                    getFelder()[hoehe][id].setIstFrei(false);
+                    getFelder()[hoehe][id].setZustand(true);
+                    p1.setActiveplayer(true);   
+                    System.out.println("Feld " + hoehe + " " + id +" wurde geändert in X");  
+                    break;              
+                }             
+            } 
+        }
+        Pruefung();
+        return "redirect:/spiel";
     }
 
 
@@ -58,8 +71,7 @@ public class SpielController {
         }
     }
 
-    private void TestLauf(){
-
+    private void TestWerte(){
         // Test Horizontal
         felder[0][0].setIstFrei(false);
         felder[0][0].setZustand(false);
@@ -69,7 +81,41 @@ public class SpielController {
         felder[0][2].setZustand(false);
         felder[0][3].setIstFrei(false);
         felder[0][3].setZustand(false);
-        
+
+        // Test Vertikal
+        felder[2][2].setIstFrei(false);
+        felder[2][2].setZustand(false);
+        felder[3][2].setIstFrei(false);
+        felder[3][2].setZustand(false);
+        felder[4][2].setIstFrei(false);
+        felder[4][2].setZustand(false);
+        felder[5][2].setIstFrei(false);
+        felder[5][2].setZustand(false);
+
+        // Test Schräg Unten
+        felder[2][2].setIstFrei(false);
+        felder[2][2].setZustand(false);
+        felder[3][3].setIstFrei(false);
+        felder[3][3].setZustand(false);
+        felder[4][4].setIstFrei(false);
+        felder[4][4].setZustand(false);
+        felder[5][5].setIstFrei(false);
+        felder[5][5].setZustand(false);
+
+        // Test Schräg Oben
+        felder[1][4].setIstFrei(false);
+        felder[1][4].setZustand(false);
+        felder[2][3].setIstFrei(false);
+        felder[2][3].setZustand(false);
+        felder[3][2].setIstFrei(false);
+        felder[3][2].setZustand(false);
+        felder[4][1].setIstFrei(false);
+        felder[4][1].setZustand(false);
+
+    }
+
+    private void Pruefung(){
+
         for(int hoehe = 0; hoehe < 6; hoehe++){
             for(int breite = 0; breite < 4; breite++){
                 if(getFelder()[hoehe][breite].getIstFrei() == false && getFelder()[hoehe][breite+1].getIstFrei() == false && getFelder()[hoehe][breite +2 ].getIstFrei() == false && getFelder()[hoehe][breite + 3].getIstFrei() == false){
@@ -82,16 +128,6 @@ public class SpielController {
                 }
             }
         }
-
-        // Test Vertikal
-        felder[2][2].setIstFrei(false);
-        felder[2][2].setZustand(false);
-        felder[3][2].setIstFrei(false);
-        felder[3][2].setZustand(false);
-        felder[4][2].setIstFrei(false);
-        felder[4][2].setZustand(false);
-        felder[5][2].setIstFrei(false);
-        felder[5][2].setZustand(false);
 
         for(int hoehe = 0; hoehe < 3; hoehe++){
             for(int breite = 0; breite < 7; breite++){
@@ -106,16 +142,6 @@ public class SpielController {
             }
         }
 
-        // Test Schräg Unten
-        felder[2][2].setIstFrei(false);
-        felder[2][2].setZustand(false);
-        felder[3][3].setIstFrei(false);
-        felder[3][3].setZustand(false);
-        felder[4][4].setIstFrei(false);
-        felder[4][4].setZustand(false);
-        felder[5][5].setIstFrei(false);
-        felder[5][5].setZustand(false);
-
         for(int hoehe = 0; hoehe < 3; hoehe++){
             for(int breite = 0; breite < 4; breite++){
                 if(getFelder()[hoehe][breite].getIstFrei() == false && getFelder()[hoehe+1][breite+1].getIstFrei() == false && getFelder()[hoehe+2][breite+2].getIstFrei() == false && getFelder()[hoehe+3][breite+3].getIstFrei() == false){
@@ -128,16 +154,6 @@ public class SpielController {
                 }
             }
         }
-
-        // Test Schräg Oben
-        felder[1][4].setIstFrei(false);
-        felder[1][4].setZustand(false);
-        felder[2][3].setIstFrei(false);
-        felder[2][3].setZustand(false);
-        felder[3][2].setIstFrei(false);
-        felder[3][2].setZustand(false);
-        felder[4][1].setIstFrei(false);
-        felder[4][1].setZustand(false);
 
         for(int hoehe = 3; hoehe < 6; hoehe++){
             for(int breite = 0; breite < 4; breite++){
@@ -158,6 +174,14 @@ public class SpielController {
     }
     public Feld[][] getFelder() {
         return felder;
+    }
+
+    public void setP1(Spieler p1) {
+        this.p1 = p1;
+    }
+
+    public Spieler getP1() {
+        return p1;
     }
 
 
