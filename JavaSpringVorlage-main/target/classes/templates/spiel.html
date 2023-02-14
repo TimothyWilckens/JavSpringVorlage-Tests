@@ -1,40 +1,64 @@
 <h2>Neues Spiel</h2>
 <hr>
-<table class="table table-bordered">
+
+<span th:if="${spieler.getActiveplayer()}==true">
+    <h4>Aktueller Spieler: O</h4>
+</span>
+<span th:unless="${spieler.getActiveplayer()}==true">
+    <h4>Aktueller Spieler: X</h4>
+</span>
+<hr>
+
+<table class="table table-bordered text-center">
     <thead>
-        <!--
-        <tr>
-            <td>Breite 0</td>
-            <td>Breite 1</td>
-            <td>Breite 2</td>
-            <td>Breite 3</td>
-            <td>Breite 4</td>
-            <td>Breite 5</td>
-            <td>Breite 6</td>
-        </tr>
-        -->
         <tr> 
-            <th scope="col">
-                <a class="btn btn-outline-primary" role="button" th:href="@{/addstein(id=${0})}">Einsetzen</a>
-            </th>
-            <th scope="col">
-                <a class="btn btn-outline-primary" role="button" th:href="@{/addstein(id=${1})}">Einsetzen</a>
-            </th>
-            <th scope="col">
-                <a class="btn btn-outline-primary" role="button" th:href="@{/addstein(id=${2})}">Einsetzen</a>
-            </th>
-            <th scope="col">
-                <a class="btn btn-outline-primary" role="button" th:href="@{/addstein(id=${3})}">Einsetzen</a>
-            </th>
-            <th scope="col">
-                <a class="btn btn-outline-primary" role="button" th:href="@{/addstein(id=${4})}">Einsetzen</a>
-            </th>
-            <th scope="col">
-                <a class="btn btn-outline-primary" role="button" th:href="@{/addstein(id=${5})}">Einsetzen</a>
-            </th>
-            <th scope="col">
-                <a class="btn btn-outline-primary" role="button" th:href="@{/addstein(id=${6})}">Einsetzen</a>
-            </th>
+            <span th:if="${gewonnen.getGewonnen()}==true"> 
+                <th scope="col">
+                    <a class="btn btn-outline-primary disabled" role="button" aria-disabled="true">Einsetzen</a>
+                </th>
+                <th scope="col">
+                    <a class="btn btn-outline-primary disabled" role="button" aria-disabled="true">Einsetzen</a>
+                </th>
+                <th scope="col">
+                    <a class="btn btn-outline-primary disabled" role="button" aria-disabled="true">Einsetzen</a>
+                </th>
+                <th scope="col">
+                    <a class="btn btn-outline-primary disabled" role="button" aria-disabled="true">Einsetzen</a>
+                </th>
+                <th scope="col">
+                    <a class="btn btn-outline-primary disabled" role="button" aria-disabled="true">Einsetzen</a>
+                </th>
+                <th scope="col">
+                    <a class="btn btn-outline-primary disabled" role="button" aria-disabled="true">Einsetzen</a>
+                </th>
+                <th scope="col">
+                    <a class="btn btn-outline-primary disabled" role="button" aria-disabled="true">Einsetzen</a>
+                </th>
+            </span>
+
+            <span th:unless="${gewonnen.getGewonnen()}==true">
+                <th scope="col">
+                    <a class="btn btn-outline-primary" role="button" th:href="@{/addstein(id=${0})}">Einsetzen</a>
+                </th>
+                <th scope="col">
+                    <a class="btn btn-outline-primary" role="button" th:href="@{/addstein(id=${1})}">Einsetzen</a>
+                </th>
+                <th scope="col">
+                    <a class="btn btn-outline-primary" role="button" th:href="@{/addstein(id=${2})}">Einsetzen</a>
+                </th>
+                <th scope="col">
+                    <a class="btn btn-outline-primary" role="button" th:href="@{/addstein(id=${3})}">Einsetzen</a>
+                </th>
+                <th scope="col">
+                    <a class="btn btn-outline-primary" role="button" th:href="@{/addstein(id=${4})}">Einsetzen</a>
+                </th>
+                <th scope="col">
+                    <a class="btn btn-outline-primary" role="button" th:href="@{/addstein(id=${5})}">Einsetzen</a>
+                </th>
+                <th scope="col">
+                    <a class="btn btn-outline-primary" role="button" th:href="@{/addstein(id=${6})}">Einsetzen</a>
+                </th>
+            </span>
           </tr>
     </thead>
 
@@ -49,3 +73,42 @@
         </td>
     </tr>
 </table>
+
+<span th:if="${gewonnen.getGewonnen()}==true">
+    <a class="btn btn-primary" role="button" th:href="@{/neuesSpiel}">Neues Spiel</a>
+</span>
+
+<span th:if="${gewonnen.getGewonnen()}==true">
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Es gibt einen Gewinner</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Da der Spieler gewechselt wird, bevor die Prüfung hier vorgenommen wird, ist es immer der vorherige Spieler, welcher gewonnen hat-->
+                    <span th:if="${spieler.getActiveplayer()}==true">
+                        <a>Spieler X hat das Spiel gewonnen!</a>
+                    </span>
+                    <span th:unless="${spieler.getActiveplayer()}==true">
+                        <a>Spieler O hat das Spiel gewonnen!</a>
+                    </span>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Spielfeld ansehen</button>
+                <a class="btn btn-primary" role="button" th:href="@{/neuesSpiel}">Neues Spiel</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</span>
+
+<script>
+$(document).ready(function(){
+    $('#staticBackdrop').modal('show');
+    console.log("HALLO!");
+    console.log('#staticBackdrop');
+
+})
+</script>

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import gymhum.de.model.Feld;
+import gymhum.de.model.Gewonnen;
 import gymhum.de.model.Spieler;
 
 @Controller
@@ -13,14 +14,14 @@ public class SpielController {
 
     Feld[][] felder;
     Spieler p1;
-    boolean gewonnen;
+    Gewonnen g1;
     
     public SpielController(){
         setFelder(new Feld[6][7]);
         setP1(new Spieler(false));
-        setGewonnen(false);
+        setG1(new Gewonnen(false));
         initFeld();
-        // Pruefung();
+        Pruefung();
         // showTestFeld();
     }
 
@@ -28,8 +29,8 @@ public class SpielController {
     public String showSpiel(@RequestParam(name="activePage", required = false, defaultValue = "spiel") String activePage, Model model){
         model.addAttribute("activePage", "spiel");
         model.addAttribute("felder", getFelder());
-        model.addAttribute("felder", getFelder());
-        model.addAttribute("gewonnen", getGewonnen(gewonnen));
+        model.addAttribute("spieler", getP1());
+        model.addAttribute("gewonnen", getG1());
         return "index.html";
     }
 
@@ -58,6 +59,12 @@ public class SpielController {
         return "redirect:/spiel";
     }
 
+    @GetMapping("/neuesSpiel") 
+    public String neuesSpiel(@RequestParam(name="activePage", required = true, defaultValue = "spiel") String activePage) {
+        initFeld();
+        getG1().setGewonnen(false);
+        return "redirect:/spiel";
+    }
 
     private void initFeld(){
         for(int i = 0; i < 6; i++){
@@ -125,10 +132,11 @@ public class SpielController {
                 if(getFelder()[hoehe][breite].getIstFrei() == false && getFelder()[hoehe][breite+1].getIstFrei() == false && getFelder()[hoehe][breite +2 ].getIstFrei() == false && getFelder()[hoehe][breite + 3].getIstFrei() == false){
                     if(getFelder()[hoehe][breite].getZustand() && getFelder()[hoehe][breite+1].getZustand() && getFelder()[hoehe][breite+2].getZustand() && getFelder()[hoehe][breite+3].getZustand()){
                         System.out.println("Spieler O hat gewonnen");
+                        g1.setGewonnen(true);
                     }
                     else if(getFelder()[hoehe][breite].getZustand() == false && getFelder()[hoehe][breite+1].getZustand() == false && getFelder()[hoehe][breite+2].getZustand() == false && getFelder()[hoehe][breite+3].getZustand() == false){
                         System.out.println("Spieler X hat gewonnen");
-                        setGewonnen(true);
+                        g1.setGewonnen(true);
                     }
                 }
             }
@@ -139,10 +147,11 @@ public class SpielController {
                 if(getFelder()[hoehe][breite].getIstFrei() == false && getFelder()[hoehe+1][breite].getIstFrei() == false && getFelder()[hoehe+2][breite].getIstFrei() == false && getFelder()[hoehe+3][breite].getIstFrei() == false){
                     if(getFelder()[hoehe][breite].getZustand() && getFelder()[hoehe+1][breite].getZustand() && getFelder()[hoehe+2][breite].getZustand() && getFelder()[hoehe+3][breite].getZustand()){
                         System.out.println("Spieler O hat gewonnen");
+                        g1.setGewonnen(true);
                     }
                     else if(getFelder()[hoehe][breite].getZustand() == false && getFelder()[hoehe+1][breite].getZustand() == false && getFelder()[hoehe+2][breite].getZustand() == false && getFelder()[hoehe+3][breite].getZustand() == false){
                         System.out.println("Spieler X hat gewonnen");
-                        setGewonnen(true);
+                        g1.setGewonnen(true);
                     }
                 }
             }
@@ -153,9 +162,11 @@ public class SpielController {
                 if(getFelder()[hoehe][breite].getIstFrei() == false && getFelder()[hoehe+1][breite+1].getIstFrei() == false && getFelder()[hoehe+2][breite+2].getIstFrei() == false && getFelder()[hoehe+3][breite+3].getIstFrei() == false){
                     if(getFelder()[hoehe][breite].getZustand() && getFelder()[hoehe+1][breite+1].getZustand() && getFelder()[hoehe+2][breite+2].getZustand() && getFelder()[hoehe+3][breite+3].getZustand()){
                         System.out.println("Spieler O hat gewonnen");
+                        g1.setGewonnen(true);
                     }
                     else if(getFelder()[hoehe][breite].getZustand() == false && getFelder()[hoehe+1][breite+1].getZustand() == false && getFelder()[hoehe+2][breite+2].getZustand() == false && getFelder()[hoehe+3][breite+3].getZustand() == false){
                         System.out.println("Spieler X hat gewonnen");
+                        g1.setGewonnen(true);
                     }
                 }
             }
@@ -166,9 +177,11 @@ public class SpielController {
                 if(getFelder()[hoehe][breite].getIstFrei() == false && getFelder()[hoehe-1][breite+1].getIstFrei() == false && getFelder()[hoehe-2][breite+2].getIstFrei() == false && getFelder()[hoehe-3][breite+3].getIstFrei() == false){
                     if(getFelder()[hoehe][breite].getZustand() && getFelder()[hoehe-1][breite+1].getZustand() && getFelder()[hoehe-2][breite+2].getZustand() && getFelder()[hoehe-3][breite+3].getZustand()){
                         System.out.println("Spieler O hat gewonnen");
+                        g1.setGewonnen(true);
                     }
                     else if(getFelder()[hoehe][breite].getZustand() == false && getFelder()[hoehe-1][breite+1].getZustand() == false && getFelder()[hoehe-2][breite+2].getZustand() == false && getFelder()[hoehe-3][breite+3].getZustand() == false){
                         System.out.println("Spieler X hat gewonnen");
+                        g1.setGewonnen(true);
                     }
                 }
             }
@@ -190,11 +203,12 @@ public class SpielController {
         return p1;
     }
 
-    public void setGewonnen(boolean gewonnen) {
-        this.gewonnen = gewonnen;
+    public void setG1(Gewonnen g1) {
+        this.g1 = g1;
     }
 
-    public boolean getGewonnen(boolean gewonnen){
-        return gewonnen;
+    public Gewonnen getG1() {
+        return g1;
     }
+
 }
