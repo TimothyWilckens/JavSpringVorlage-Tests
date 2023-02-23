@@ -191,6 +191,7 @@ public class SpielController {
     public void setFelder(Feld[][] felder) {
         this.felder = felder;
     }
+    
     public Feld[][] getFelder() {
         return felder;
     }
